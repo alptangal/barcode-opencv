@@ -70,10 +70,7 @@ def scan_qr_code():
     st.write('hello world')
     if st.session_state.scanning:
         st.write('hello world123')
-        img = Image.open(img_file_buffer)
-        qr_codes=decode_qr_code(img)
-        print(qr_codes)
-        st.write("QR Code Scanner123:"+str(qr_codes) if qr_codes else '')
+       
         cap = cv2.VideoCapture(0)
         print(cap)
         stframe = st.empty()
