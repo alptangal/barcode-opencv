@@ -58,7 +58,7 @@ def scan_qr_code():
             start_scanning()
 
     if st.session_state.scanning:
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(-1)
         print(cap)
         stframe = st.empty()
 
