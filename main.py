@@ -144,7 +144,8 @@ def scan_qr_code():
     if st.session_state.scanning:
         st.write('111222333')
         print(111222333)
-        webrtc_streamer(key="example", video_frame_callback=video_frame_callback)
+        while True:
+            webrtc_streamer(key="example", video_frame_callback=video_frame_callback)
         st.write('333334444')
         print(333334444)
 
