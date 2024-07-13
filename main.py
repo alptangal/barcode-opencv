@@ -39,7 +39,7 @@ def decode_qr_code(frame):
     Returns:
     list: A list of decoded QR code data.
     """
-    decoded_objects = pyzbar.decode(frame,symbols=ZBarSymbol)
+    decoded_objects = pyzbar.decode(frame)
     qr_codes = [obj.data.decode('utf-8') for obj in decoded_objects]
     return qr_codes
 
