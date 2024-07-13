@@ -58,6 +58,7 @@ def scan_qr_code():
             start_scanning()
     img_file_buffer = st.camera_input("Take a picture")
     if img_file_buffer is not None:
+        print(1122333)
         # To read image file buffer with OpenCV:
         bytes_data = img_file_buffer.getvalue()
         print(bytes_data)
