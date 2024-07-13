@@ -56,7 +56,7 @@ def scan_qr_code():
     if not st.session_state.scanning:
         if st.button('Start Scanning', key='start'):
             start_scanning()
-
+    img_file_buffer = st.camera_input("Take a picture")
     if st.session_state.scanning:
         cap = cv2.VideoCapture(-1)
         print(cap)
