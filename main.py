@@ -4,6 +4,7 @@ from io import BytesIO
 from PIL import Image
 import cv2
 from pyzbar import pyzbar
+from pyzbar.pyzbar import ZBarSymbol
 
 def decode_qr_code(frame):
     """
@@ -15,7 +16,7 @@ def decode_qr_code(frame):
     Returns:
     list: A list of decoded QR code data.
     """
-    decoded_objects = pyzbar.decode(frame)
+    decoded_objects = pyzbar.decode(frame,symbols=ZBarSymbol)
     qr_codes = [obj.data.decode('utf-8') for obj in decoded_objects]
     return qr_codes
 
