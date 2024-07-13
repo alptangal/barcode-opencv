@@ -68,6 +68,7 @@ def scan_qr_code():
         st.write("QR Code Scanner123:"+str(qr_codes) if qr_codes else '')
     st.write('hello world')
     if st.session_state.scanning:
+        st.write('hello world123')
         bytes_data = img_file_buffer.getvalue()
         print(bytes_data)
         img = Image.open(img_file_buffer)
