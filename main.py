@@ -141,7 +141,9 @@ def scan_qr_code():
             start_scanning()
     st.write('hello world')
     if st.session_state.scanning:
+        print(111222333)
         webrtc_streamer(key="example", video_frame_callback=video_frame_callback)
+        print(333334444)
 
 st.title("QR Code Toolkit")
 
