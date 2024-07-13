@@ -71,7 +71,8 @@ def video_frame_callback(frame):
     print(111222)
     st.title("hello world #1")
     qr_codes = decode_qr_code(frame)
-    print(22222)
+    for item in qr_codes:
+        st.write(item)
     stframe = st.empty()
     # Display the frame
     st.write('hello world #2')
