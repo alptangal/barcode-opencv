@@ -16,9 +16,7 @@ def video_frame_callback(frame):
 
     # Display the decoded QR codes if it's a new message
     if qr_codes:
-        if st.session_state.decoded_message != qr_codes[0]:
-            st.session_state.decoded_message = qr_codes[0]
-            st.success(f"Decoded QR Code: {qr_codes[0]}")
+        st.write(qr_codes)
     img = frame.to_ndarray(format="bgr24")
 
     flipped = img[::-1,:,:]
