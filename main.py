@@ -58,14 +58,6 @@ def live_detection(play_state):
          async_processing=True,
       )
 
-   '''while True:
-        time.sleep(0.10)
-        if stream.video_processor.barcode_val != False:
-            barcode = stream.video_processor.barcode_val
-            print("FOUND")
-            c1.subheader(barcode)
-            del stream'''
-
 
 def video_frame_callback(frame):
     print(111222)
