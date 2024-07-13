@@ -129,7 +129,8 @@ def scan_qr_code():
         if st.button('Start Scanning', key='start'):
             start_scanning()
     st.write('hello world')
-    detected_barcode = live_detection(st.session_state.scanning)
+    if st.session_state.scanning:
+        detected_barcode = live_detection(True)
 
 st.title("QR Code Toolkit")
 
