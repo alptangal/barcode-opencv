@@ -9,4 +9,4 @@ def video_frame_callback(frame):
 
     return av.VideoFrame.from_ndarray(flipped, format="bgr24")
 
-webrtc_streamer(key="sample")
+webrtc_streamer(key="sample", video_frame_callback=video_frame_callback)
