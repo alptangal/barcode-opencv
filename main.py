@@ -9,6 +9,16 @@ from streamlit_webrtc import webrtc_streamer
 
 
 def video_frame_callback(frame):
+    qr_codes = decode_qr_code(frame)
+    stframe = st.empty()
+    # Display the frame
+    stframe.image(frame, channels="BGR")
+
+    # Display the decoded QR codes if it's a new message
+    if qr_codes:
+        if st.session_state.decoded_message != qr_codes[0]:
+            st.session_state.decoded_message = qr_codes[0]
+            st.success(f"Decoded QR Code: {qr_codes[0]}")
     img = frame.to_ndarray(format="bgr24")
 
     flipped = img[::-1,:,:]
