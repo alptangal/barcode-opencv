@@ -58,13 +58,13 @@ def live_detection(play_state):
          async_processing=True,
       )
 
-   while True:
+   '''while True:
         time.sleep(0.10)
         if stream.video_processor.barcode_val != False:
             barcode = stream.video_processor.barcode_val
             print("FOUND")
             c1.subheader(barcode)
-            del stream
+            del stream'''
 
 
 def video_frame_callback(frame):
@@ -142,11 +142,8 @@ def scan_qr_code():
             start_scanning()
     st.write('hello world')
     if st.session_state.scanning:
-        st.write('111222333')
-        print(111222333)
-        webrtc_streamer(key="example", video_frame_callback=video_frame_callback)
-        st.write('333334444')
-        print(333334444)
+        bar=live_detection(True)
+        st.write(bar)
 
 st.title("QR Code Toolkit")
 
