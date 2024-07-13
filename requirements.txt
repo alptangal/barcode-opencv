@@ -4,3 +4,4 @@ streamlit ==1.32
 pyzbar
 PyQRCode
 opencv-python-headless
+streamlit-webrtc>=0.47
