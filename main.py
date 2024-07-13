@@ -1,61 +1,97 @@
-import cv2
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoHTMLAttributes
-import numpy as np
-import av
+import pyqrcode
+from io import BytesIO
+from PIL import Image
+import cv2
+from pyzbar import pyzbar
 
-st.title("OpenCV Filters on Video Stream")
+def decode_qr_code(frame):
+    """
+    Decodes QR codes in the given image frame.
 
-filter = "none"
+    Parameters:
+    frame (numpy.ndarray): The image frame to scan for QR codes.
 
+    Returns:
+    list: A list of decoded QR code data.
+    """
+    decoded_objects = pyzbar.decode(frame)
+    qr_codes = [obj.data.decode('utf-8') for obj in decoded_objects]
+    return qr_codes
 
-def transform(frame: av.VideoFrame):
-    img = frame.to_ndarray(format="bgr24")
+def create_qr_code():
+    st.title("QR Code Generator")
+    data = st.text_input("Enter the data to encode in the QR code")  # input by user
 
-    if filter == "blur":
-        img = cv2.GaussianBlur(img, (21, 21), 0)
-    elif filter == "canny":
-        img = cv2.cvtColor(cv2.Canny(img, 100, 200), cv2.COLOR_GRAY2BGR)
-    elif filter == "grayscale":
-        # We convert the image twice because the first conversion returns a 2D array.
-        # the second conversion turns it back to a 3D array.
-        img = cv2.cvtColor(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), cv2.COLOR_GRAY2BGR)
-    elif filter == "sepia":
-        kernel = np.array(
-            [[0.272, 0.534, 0.131], [0.349, 0.686, 0.168], [0.393, 0.769, 0.189]]
+    if data:
+        qr_image = generate_qr_code(data)    # function generate_qr_code with data as argument
+        img = Image.open(qr_image)
+
+        st.image(img, caption="Generated QR Code", use_column_width=False)
+
+        st.download_button(
+            label="Download QR Code",
+            data=qr_image,
+            file_name="qrcode.png",
+            mime="image/png"
         )
-        img = cv2.transform(img, kernel)
-    elif filter == "invert":
-        img = cv2.bitwise_not(img)
-    elif filter == "none":
-        pass
 
-    return av.VideoFrame.from_ndarray(img, format="bgr24")
+def scan_qr_code():
+    st.title("QR Code Scanner")
+    st.write("Click the button below to start the camera and scan a QR code.")
 
+    # Initialize session state for control buttons and decoded message
+    if "scanning" not in st.session_state:
+        st.session_state.scanning = False
 
-col1, col2, col3, col4, col5, col6 = st.columns([1, 1, 1, 1, 1, 1])
+    if "decoded_message" not in st.session_state:
+        st.session_state.decoded_message = None
 
-with col1:
-    if st.button("None"):
-        filter = "none"
-with col2:
-    if st.button("Blur"):
-        filter = "blur"
-with col3:
-    if st.button("Grayscale"):
-        filter = "grayscale"
-with col4:
-    if st.button("Sepia"):
-        filter = "sepia"
-with col5:
-    if st.button("Canny"):
-        filter = "canny"
-with col6:
-    if st.button("Invert"):
-        filter = "invert"
+    def start_scanning():
+        st.session_state.scanning = True
 
+    def stop_scanning():
+        st.session_state.scanning = False
 
-webrtc_streamer(
-    key="streamer",
-    sendback_audio=False
-    )
+    if not st.session_state.scanning:
+        if st.button('Start Scanning', key='start'):
+            start_scanning()
+
+    if st.session_state.scanning:
+        cap = cv2.VideoCapture(0)
+        stframe = st.empty()
+
+        while st.session_state.scanning:
+            ret, frame = cap.read()
+            if not ret:
+                st.write("Failed to capture image.")
+                break
+
+            qr_codes = decode_qr_code(frame)
+
+            # Display the frame
+            stframe.image(frame, channels="BGR")
+
+            # Display the decoded QR codes if it's a new message
+            if qr_codes:
+                if st.session_state.decoded_message != qr_codes[0]:
+                    st.session_state.decoded_message = qr_codes[0]
+                    st.success(f"Decoded QR Code: {qr_codes[0]}")
+                    break
+
+        if st.button('Stop Scanning', key='stop', on_click=stop_scanning):
+            cap.release()
+            cv2.destroyAllWindows()
+
+st.title("QR Code Toolkit")
+
+option = st.radio(
+    "Choose an option:",
+    ("Create QR", "Scan QR")
+)
+
+if option == "Create QR":
+    create_qr_code()
+elif option == "Scan QR":
+    scan_qr_code()
+
