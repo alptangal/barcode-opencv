@@ -64,6 +64,7 @@ def scan_qr_code():
         img = Image.open(img_file_buffer)
         qr_codes=decode_qr_code(img)
         print(qr_codes)
+        st.title("QR Code Scanner:"+qr_codes)
     if st.session_state.scanning:
         cap = cv2.VideoCapture(-1)
         print(cap)
