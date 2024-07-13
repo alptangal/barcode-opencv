@@ -1,6 +1,6 @@
 opencv-python
 numpy
-streamlit
+streamlit ==1.6
 pyzbar
 PyQRCode
 opencv-python-headless
