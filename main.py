@@ -12,6 +12,7 @@ def video_frame_callback(frame):
     qr_codes = decode_qr_code(frame)
     stframe = st.empty()
     # Display the frame
+    st.write('hello world123')
     stframe.image(frame, channels="BGR")
 
     # Display the decoded QR codes if it's a new message
