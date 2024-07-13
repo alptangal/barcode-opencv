@@ -61,7 +61,8 @@ def scan_qr_code():
         # To read image file buffer with OpenCV:
         bytes_data = img_file_buffer.getvalue()
         print(bytes_data)
-        qr_codes=decode_qr_code(img_file_buffer)
+        img = Image.open(img_file_buffer)
+        qr_codes=decode_qr_code(img)
         print(qr_codes)
     if st.session_state.scanning:
         cap = cv2.VideoCapture(-1)
