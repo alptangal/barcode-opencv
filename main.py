@@ -1,27 +1,18 @@
+import streamlit as st
 import cv2
+import numpy as np
 
-camera_id = 0
-delay = 1
-window_name = 'OpenCV Barcode'
+img_file_buffer = st.camera_input("Take a picture")
 
-bd = cv2.barcode.BarcodeDetector()
-cap = cv2.VideoCapture(camera_id)
+if img_file_buffer is not None:
+    # To read image file buffer with OpenCV:
+    bytes_data = img_file_buffer.getvalue()
+    cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
 
-while True:
-    ret, frame = cap.read()
+    # Check the type of cv2_img:
+    # Should output: <class 'numpy.ndarray'>
+    st.write(type(cv2_img))
 
-    if ret:
-        ret_bc, decoded_info, _, points = bd.detectAndDecode(frame)
-        if ret_bc:
-            frame = cv2.polylines(frame, points.astype(int), True, (0, 255, 0), 3)
-            for s, p in zip(decoded_info, points):
-                if s:
-                    print(s)
-                    frame = cv2.putText(frame, s, p[1].astype(int),
-                                        cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2, cv2.LINE_AA)
-        cv2.imshow(window_name, frame)
-
-    if cv2.waitKey(delay) & 0xFF == ord('q'):
-        break
-
-cv2.destroyWindow(window_name)
+    # Check the shape of cv2_img:
+    # Should output shape: (height, width, channels)
+    st.write(cv2_img.shape)
