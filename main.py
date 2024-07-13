@@ -9,10 +9,11 @@ from streamlit_webrtc import webrtc_streamer
 
 
 def video_frame_callback(frame):
+    st.title("hello world #1")
     qr_codes = decode_qr_code(frame)
     stframe = st.empty()
     # Display the frame
-    st.write('hello world123')
+    st.write('hello world #2')
     stframe.image(frame, channels="BGR")
 
     # Display the decoded QR codes if it's a new message
