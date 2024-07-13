@@ -3,3 +3,4 @@ numpy
 streamlit
 pyzbar
 PyQRCode
+opencv-python-headless
