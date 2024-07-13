@@ -60,6 +60,7 @@ def scan_qr_code():
     if img_file_buffer is not None:
         # To read image file buffer with OpenCV:
         bytes_data = img_file_buffer.getvalue()
+        print(bytes_data)
         qr_codes=decode_qr_code(bytes_data)
         print(qr_codes)
     if st.session_state.scanning:
