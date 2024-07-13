@@ -4,14 +4,18 @@ from io import BytesIO
 from PIL import Image
 import cv2
 import av
+import time
 from pyzbar import pyzbar
 from pyzbar.pyzbar import ZBarSymbol
 from streamlit_webrtc import webrtc_streamer
 from pyzbar.pyzbar import decode
 from streamlit_webrtc import (webrtc_streamer, VideoProcessorBase,WebRtcMode)
 
+st.set_page_config(layout="wide")
+
 def live_detection(play_state):
 
+   c1, c2 = st.columns(2)
    class BarcodeProcessor(VideoProcessorBase):
 
       def __init__(self) -> None:
@@ -38,14 +42,11 @@ def live_detection(play_state):
          image = frame.to_ndarray(format="bgr24")
 
          annotated_image, result = self.BarcodeReader(image)
-        
+
          if result == False:
-            return av.VideoFrame.from_ndarray(image, format="bgr24")
-
+            return av.VideoFrame.from_ndarray(annotated_image, format="bgr24")
          else:
-
             self.barcode_val = result[0]
-            play_state = False
             return av.VideoFrame.from_ndarray(annotated_image, format="bgr24")
 
    stream = webrtc_streamer(
@@ -56,6 +57,15 @@ def live_detection(play_state):
          media_stream_constraints={"video": True, "audio": False},
          async_processing=True,
       )
+
+   while True:
+        time.sleep(0.10)
+        if stream.video_processor.barcode_val != False:
+            barcode = stream.video_processor.barcode_val
+            print("FOUND")
+            c1.subheader(barcode)
+            del stream
+
 
 def video_frame_callback(frame):
     print(111222)
@@ -77,7 +87,7 @@ def video_frame_callback(frame):
     return av.VideoFrame.from_ndarray(flipped, format="bgr24")
 
 
-webrtc_streamer(key="example", video_frame_callback=video_frame_callback)
+#webrtc_streamer(key="example", video_frame_callback=video_frame_callback)
 def decode_qr_code(frame):
     """
     Decodes QR codes in the given image frame.
