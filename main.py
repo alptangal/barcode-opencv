@@ -3,6 +3,7 @@ import pyqrcode
 from io import BytesIO
 from PIL import Image
 import cv2
+import av
 from pyzbar import pyzbar
 from pyzbar.pyzbar import ZBarSymbol
 from streamlit_webrtc import webrtc_streamer
