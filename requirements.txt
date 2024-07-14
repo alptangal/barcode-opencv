@@ -5,3 +5,4 @@ pyzbar
 PyQRCode
 opencv-python-headless
 streamlit-webrtc>=0.47
+matplotlib
