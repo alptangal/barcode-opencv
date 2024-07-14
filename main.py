@@ -55,7 +55,6 @@ CLASSES = [
 
 
 class Detection(NamedTuple):
-    barcode:str
     class_id: int
     label: str
     score: float
@@ -112,7 +111,6 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     output = output[output[:, 2] >= score_threshold]
     detections = [
         Detection(
-            barcode='123',
             class_id=int(detection[1]),
             label=CLASSES[int(detection[1])],
             score=float(detection[2]),
