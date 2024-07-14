@@ -55,6 +55,7 @@ CLASSES = [
 
 
 class Detection(NamedTuple):
+    barcode:str,
     class_id: int
     label: str
     score: float
@@ -97,7 +98,7 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     detectedBarcodes = decode(image)
     #result_queue.put(detectedBarcodes[0])
     #print(detectedBarcodes[0])
-    st.write(detectedBarcodes[0])
+    #st.write(detectedBarcodes[0])
     # Run inference
     blob = cv2.dnn.blobFromImage(
         cv2.resize(image, (300, 300)), 0.007843, (300, 300), 127.5
@@ -112,6 +113,7 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     output = output[output[:, 2] >= score_threshold]
     detections = [
         Detection(
+            barcode=str(detectedBarcodes[0]),
             class_id=int(detection[1]),
             label=CLASSES[int(detection[1])],
             score=float(detection[2]),
