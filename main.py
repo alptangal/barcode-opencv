@@ -59,8 +59,17 @@ if img_file_buffer is not None:
 
 else:
     demo_image = DEMO_IMAGE
-    image = np.array(Image.open(demo_image))
+    image = np.array(Image.open(demo_image)) 
+flip = st.checkbox("Flip")
+def video_frame_callback(frame):
+    img = frame.to_ndarray(format="bgr24")
 
+    flipped = img[::-1,:,:] if flip else img
+
+    return av.VideoFrame.from_ndarray(flipped, format="bgr24")
+
+
+webrtc_streamer(key="example", video_frame_callback=video_frame_callback)
 detections = process_image(image)
 image, labels = annotate_image(image, detections, confidence_threshold)
 
