@@ -94,10 +94,10 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     st.write('hello world')
     image = frame.to_ndarray(format="bgr24")
     #st.empty()
-    #detectedBarcodes = decode(image)
+    detectedBarcodes = decode(image)
     #result_queue.put(detectedBarcodes[0])
     #print(detectedBarcodes[0])
-    #st.write(detectedBarcodes[0])
+    st.write(detectedBarcodes[0])
     # Run inference
     blob = cv2.dnn.blobFromImage(
         cv2.resize(image, (300, 300)), 0.007843, (300, 300), 127.5
