@@ -94,6 +94,7 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     st.write('hello world')
     image = frame.to_ndarray(format="bgr24")
     bars=decode(image)
+    rs.append('hello world 123')
     for bar in bars:
         rs.append(bar)
     #st.empty()
