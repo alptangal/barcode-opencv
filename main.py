@@ -165,7 +165,7 @@ if st.checkbox("Show the detected labels", value=True):
             result = result_queue.get()
             labels_placeholder.table(result)
             for item in rs:
-                st.write(item)
+                st.write(str(item))
 
 st.markdown(
     "This demo uses a model and code from "
