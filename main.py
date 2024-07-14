@@ -163,9 +163,10 @@ if st.checkbox("Show the detected labels", value=True):
         # are not strictly synchronized.
         while True:
             result = result_queue.get()
-            labels_placeholder.table(result)
+            #labels_placeholder.table(result)
+            
             for item in rs:
-                st.write(str(item))
+                labels_placeholder.write(str(item))
 
 st.markdown(
     "This demo uses a model and code from "
