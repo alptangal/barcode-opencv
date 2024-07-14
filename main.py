@@ -92,7 +92,7 @@ result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     image = frame.to_ndarray(format="bgr24")
     #st.empty()
-    detectedBarcodes = decode(image)
+    detectedBarcodes = decode(frame)
     result_queue.put(detectedBarcodes)
     print(detectedBarcodes)
     st.write(detectedBarcodes)
