@@ -166,7 +166,7 @@ if st.checkbox("Show the detected labels", value=True):
             #labels_placeholder.table(result)
             
             for item in rs:
-                labels_placeholder.write(str(item))
+                labels_placeholder.text(str(item))
 
 st.markdown(
     "This demo uses a model and code from "
