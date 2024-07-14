@@ -88,11 +88,14 @@ score_threshold = st.slider("Score threshold", 0.0, 1.0, 0.5, 0.05)
 # TODO: A general-purpose shared state object may be more useful.
 result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
 
-
+rs=[]
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     st.title('hello')
     st.write('hello world')
     image = frame.to_ndarray(format="bgr24")
+    bars=decode(image)
+    for bar in bars:
+        rs.append(bar)
     #st.empty()
     #result_queue.put(detectedBarcodes[0])
     #print(detectedBarcodes[0])
@@ -161,6 +164,8 @@ if st.checkbox("Show the detected labels", value=True):
         while True:
             result = result_queue.get()
             labels_placeholder.table(result)
+            for item in rs:
+                st.write(item)
 
 st.markdown(
     "This demo uses a model and code from "
