@@ -55,7 +55,7 @@ CLASSES = [
 
 
 class Detection(NamedTuple):
-    barcode:str,
+    barcode:str
     class_id: int
     label: str
     score: float
