@@ -17,7 +17,7 @@ def get_ice_servers():
     """
 
     # Ref: https://www.twilio.com/docs/stun-turn/api
-    try:
+    '''try:
         account_sid = '123'#os.environ["TWILIO_ACCOUNT_SID"]
         auth_token = '123'#os.environ["TWILIO_AUTH_TOKEN"]
     except KeyError:
@@ -34,6 +34,6 @@ def get_ice_servers():
         st.warning(
             f"Error occurred while accessing Twilio API. Fallback to a free STUN server from Google. ({e})"  # noqa: E501
         )
-        return [{"urls": ["stun:stun.l.google.com:19302"]}]
+        return [{"urls": ["stun:stun.l.google.com:19302"]}]'''
     
     return [{"urls":"stun:stun.relay.metered.ca:80"},{"urls":"turn:global.relay.metered.ca:80","username":"78f36f157b772e52ce9d6a43","credential":"ubUcdj11HN7FSrC2"},{"urls":"turn:global.relay.metered.ca:80?transport=tcp","username":"78f36f157b772e52ce9d6a43","credential":"ubUcdj11HN7FSrC2"},{"urls":"turn:global.relay.metered.ca:443","username":"78f36f157b772e52ce9d6a43","credential":"ubUcdj11HN7FSrC2"},{"urls":"turns:global.relay.metered.ca:443?transport=tcp","username":"78f36f157b772e52ce9d6a43","credential":"ubUcdj11HN7FSrC2"}]
