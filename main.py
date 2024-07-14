@@ -90,7 +90,6 @@ result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
 
 rs=[]
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
-    rs=[]
     st.title('hello')
     st.write('hello world')
     image = frame.to_ndarray(format="bgr24")
